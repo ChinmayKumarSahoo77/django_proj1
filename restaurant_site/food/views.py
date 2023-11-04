@@ -33,3 +33,10 @@ def item(request):
 
 def offer_water(request):
     return HttpResponse("<h3>Do you need water?</h3>")
+
+def details(request,itemId):
+    item_details = Item.objects.get(id = itemId)
+    context = {
+        "itemDetails": item_details,
+    }
+    return render(request, 'food/details.html', context)

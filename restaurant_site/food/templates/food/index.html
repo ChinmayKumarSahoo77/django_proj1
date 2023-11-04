@@ -2,7 +2,9 @@
 
 <ul>
     <li>
-        {{ item.id }} - {{ item.item_name }} - {{ item.item_desc }}
+        <!-- {{ item.id }} - {{ item.item_name }} - {{ item.item_desc }} -->
+        <!-- <a href="/food/{{ item.id }}">{{ item.id }} - {{ item.item_name }} - {{ item.item_desc }}</a> -->
+        <a href="{% url 'food:details' item.id %}">{{ item.id }} - {{ item.item_name }} </a>
     </li>
 </ul>
 
