@@ -1,8 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.template import loader
 
 from .models import Item
+from .forms import CreateForm
 
 # Create your views here.
 
@@ -40,3 +41,36 @@ def details(request,itemId):
         "itemDetails": item_details,
     }
     return render(request, 'food/details.html', context)
+
+def create_item(request):
+    form_data = CreateForm(request.POST or None)
+    
+    if form_data.is_valid():
+        form_data.save()
+        return redirect('food:greet')
+
+        
+
+    return render(request, 'food/create_form.html', {'form_data': form_data})
+
+def update_item(request, itemId):
+    item_id = Item.objects.get(id = itemId)
+
+    form_data = CreateForm(request.POST or None, instance = item_id)
+
+    if form_data.is_valid():
+        form_data.save()
+        return redirect('food:greet')
+
+    # render tamplate
+    return render(request, 'food/create_form.html', {'form_data':form_data, 'itemId': item_id})
+
+def delete_item(request, itemId):
+    item_id = Item.objects.get(id = itemId)
+
+    if request.method == 'POST':
+        item_id.delete()
+        return redirect('food:greet')
+
+    return render(request, 'food/delete_item.html', {'item': item_id})
+

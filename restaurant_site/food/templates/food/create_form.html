@@ -1,0 +1,13 @@
+{% extends 'food/base.html' %}
+{% block body %}
+<!-- Above  code is to apply the base changes-->
+<form method="POST">
+    <!-- POST is bcoz we want to insert data into DB -->
+    <!-- Below tag prevents cross side scripting -->
+    {% csrf_token %}
+    {{ form_data }}
+    <!-- form: is a context which will be passed from view -->
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}
