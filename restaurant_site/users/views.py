@@ -1,6 +1,7 @@
 from django.contrib import messages
 # from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 
 from .forms import RegisterForm
 
@@ -13,10 +14,14 @@ def register(request):
             form_data.save() # saving form_data
             user_name = form_data.cleaned_data.get('username') # get username from form_data
             # using message.success() trying to print the message
-            messages.success(request, f'Welcome {user_name}, your have logged in successfully.')
+            messages.success(request, f'Welcome {user_name}, your have successfully logged in.')
             return redirect('login') #render list of food page
         
     else:
         # create the form if method is not POST
         form_data = RegisterForm()
     return render(request, 'users/register.html', {'form': form_data})
+
+@login_required
+def profile_page(request):
+    return render(request, 'users/profile.html')

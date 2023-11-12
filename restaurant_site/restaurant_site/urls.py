@@ -28,4 +28,5 @@ urlpatterns = [
     path('logout/', auth_view.LogoutView.as_view(template_name = "users/logout.html"), name = 'logout'),
     #.as_view() bcoz of class view
     # template_name = "users/login.html" -> tell django to look for template in specified location
+    path('profile/', user_view.profile_page, name='profile'),
 ]
