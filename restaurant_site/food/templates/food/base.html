@@ -17,6 +17,13 @@
             <a href="#" class="nav-item p-2 border border">Menu</a>
             <a href="#" class="nav-item p-2 border border">View</a>
 
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="nav-item p-2 border border">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-item p-2 border border">Login</a>
+            
+            {% endif %}
+
         </div>
     </nav>
     {% if messages %}
