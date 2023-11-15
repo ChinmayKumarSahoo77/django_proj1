@@ -8,7 +8,7 @@ class UserProfile(models.Model):
     # It creates one to one relation with User model
     # on_delete=models.CASCADE - On deleting user the profile also need to be deleted
     
-    image = models.ImageField(default="profile_pic.jpg", upload_to="profile_pictures")
+    image = models.ImageField(default="profilepic.jpg", upload_to="profile_pictures")
     locations = models.CharField(max_length=100)
 
     def __str__(self) -> str:
