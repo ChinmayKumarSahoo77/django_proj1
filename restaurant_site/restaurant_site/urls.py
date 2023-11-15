@@ -36,7 +36,7 @@ urlpatterns = [
 
 # Search how to manage static files in django
 # Copy the code from following section and add it to urls.py of main project:
-# Serving static files during development
+# Serving files uploaded by a user during development
 urlpatterns += [
     # ... the rest of your URLconf goes here ...
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
