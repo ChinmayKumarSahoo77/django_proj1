@@ -4,7 +4,8 @@ from django.template import loader
 
 from .models import Item
 from .forms import CreateForm
-from django.views.generic import ListView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 # Create your views here.
 
@@ -51,6 +52,11 @@ def details(request,itemId):
         "itemDetails": item_details,
     }
     return render(request, 'food/details.html', context)
+
+# class Based Detail View for getting details of specific item
+class ItemDetailView(DetailView):
+    model = Item
+    template_name = 'food/details.html'
 
 def create_item(request):
     form_data = CreateForm(request.POST or None)

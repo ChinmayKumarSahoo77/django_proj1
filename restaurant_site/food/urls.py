@@ -11,8 +11,12 @@ urlpatterns = [
     path('item/', views.item, name = 'item'),
     #food/offer_water/
     path('offer_water/', views.offer_water, name = 'offer_water'),
+    
     #food/1
-    path('<int:itemId>', views.details, name = 'details'),
+    path('<int:pk>/', views.ItemDetailView.as_view(), name = 'details'), 
+    # Above is class based details view
+    # path('<int:itemId>/', views.details, name = 'details'), - Above is class based details view
+
     #food/add by using forms
     path('add', views.create_item, name = 'create_item'),
     #update item
