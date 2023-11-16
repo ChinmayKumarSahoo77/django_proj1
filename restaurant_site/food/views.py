@@ -4,6 +4,7 @@ from django.template import loader
 
 from .models import Item
 from .forms import CreateForm
+from django.views.generic import ListView
 
 # Create your views here.
 
@@ -19,15 +20,24 @@ def greet(request):
 """
 
 def greet(request):
-    """
-    Render template using django render
-    """
     item_list = Item.objects.all()
     # template = loader.get_template('food/index.html')
     context = {
         'itemList': item_list,
     }
+    # Rendering template using django render
     return render(request, 'food/index.html', context)
+
+"""
+    Implementing django 'Class Based' 'List' view inplace of above greet() function view
+    FYI:
+    django 'List' view is used to show the list of item and it's a (generic view)inbuilt Class Based view
+ """
+
+class ItemListClassView(ListView):
+    model = Item
+    template_name = 'food/index.html'
+    context_object_name = 'itemList'
 
 def item(request):
     return HttpResponse("<h1>Here is the item list view</h1>")

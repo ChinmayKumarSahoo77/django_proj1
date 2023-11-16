@@ -5,7 +5,8 @@ from . import views
 app_name = "food"
 urlpatterns = [
     #food/
-    path('', views.greet, name = 'greet'),
+    #used as_view() due to ItemListClassView is a class based view
+    path('', views.ItemListClassView.as_view(), name = 'greet'),
     #food/item/
     path('item/', views.item, name = 'item'),
     #food/offer_water/
