@@ -5,7 +5,7 @@
     <!-- POST is bcoz we want to insert data into DB -->
     <!-- Below tag prevents cross side scripting -->
     {% csrf_token %}
-    {{ form_data }}
+    {{ form }}
     <!-- form: is a context which will be passed from view -->
     <button type="submit">Save</button>
 </form>

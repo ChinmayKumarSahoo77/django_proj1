@@ -6,6 +6,7 @@ from .models import Item
 from .forms import CreateForm
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 
 # Create your views here.
 
@@ -65,9 +66,45 @@ def create_item(request):
         form_data.save()
         return redirect('food:greet')
 
-        
-
     return render(request, 'food/create_form.html', {'form_data': form_data})
+
+# class based view for create item
+class CreateItem(CreateView):
+    model = Item
+    fields = ['item_name', 'item_desc', 'item_price', 'item_image']
+    # Fields which are required to show in form
+    template_name = 'food/create_form.html'
+
+    # Create a function to accept form
+    def form_valid(self, form):
+        form.instance.user_name = self.request.user
+
+        return super().form_valid(form)
+"""
+In Django, when you create or update an object using a form, you can customize the behavior by overriding certain methods in your class-based views. The `form_valid` method is one of these methods.
+
+Here's an explanation of what this `form_valid` function does:
+
+1. **`form_valid` Method:**
+   - The `form_valid` method is called when the form is successfully validated. This happens when the user submits the form with valid data.
+   - This method is part of the Django `CreateView` class, and you've overridden it in your `CreateItem` class.
+
+2. **`form` Argument:**
+   - The `form` argument is the instance of the form that has been successfully validated.
+
+3. **Updating `form.instance.user_name`:**
+   - `form.instance` represents the instance of the model associated with the form. In this case, it's an instance of the `Item` model because your view is a `CreateView` for the `Item` model.
+   - `self.request.user` represents the user who made the request (the user who is currently logged in). You're assigning this user to the `user_name` field of the `Item` model instance.
+
+4. **`super().form_valid(form)` Call:**
+   - This line calls the `form_valid` method of the parent class (`CreateView`) using the `super()` function.
+   - This is important because the parent class's `form_valid` method likely contains logic that is necessary for the view to function properly. By calling `super().form_valid(form)`, you ensure that the default behavior of the parent class is executed.
+
+5. **Return Statement:**
+   - The `return super().form_valid(form)` line is used to return the result of the parent class's `form_valid` method. This is usually necessary to maintain the expected flow of the view.
+
+In summary, the `form_valid` method in your example is responsible for updating the `user_name` field of the `Item` model instance with the currently logged-in user and then calling the `form_valid` method of the parent class to ensure that any default behavior is executed.
+"""
 
 def update_item(request, itemId):
     item_id = Item.objects.get(id = itemId)

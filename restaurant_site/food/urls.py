@@ -18,7 +18,7 @@ urlpatterns = [
     # path('<int:itemId>/', views.details, name = 'details'), - Above is class based details view
 
     #food/add by using forms
-    path('add', views.create_item, name = 'create_item'),
+    path('add/', views.CreateItem.as_view(), name = 'create_item'),
     #update item
     path('update/<int:itemId>', views.update_item, name = 'update_item'),
     # delete item
