@@ -1,6 +1,33 @@
+{% extends 'food/base.html' %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Signup</button>
-</form>
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <div class="card-title">
+                        Register
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="form-group mb-3">
+                            {{ field.name }}
+                            <br>
+                            {{ field }}
+                            <!-- 'field.name' displays the name of the field eg "username" and
+                            'field' create an area to accept the value for the perticular field name -->
+                        </div>
+                        {% endfor %}
+                        <button class="btn btn-info" type="submit">Signup</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

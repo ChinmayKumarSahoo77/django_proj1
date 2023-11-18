@@ -1,13 +1,41 @@
 {% extends 'food/base.html' %}
-{% block body %}
 <!-- Above  code is to apply the base changes-->
-<form method="POST">
-    <!-- POST is bcoz we want to insert data into DB -->
-    <!-- Below tag prevents cross side scripting -->
-    {% csrf_token %}
-    {{ form }}
-    <!-- form: is a context which will be passed from view -->
-    <button type="submit">Save</button>
-</form>
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <div class="card-title">
+                        Add Item
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <!-- POST is bcoz we want to insert data into DB -->
+                        <!-- Below tag prevents cross side scripting -->
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="form-group mb-3">
+                            {{ field.name }}
+                            <br>
+                            {{ field }}
+                        </div>
+                        {% endfor %}
+
+                        <!-- form: is a context which will be passed from view -->
+                        <button class="btn btn-info" type="submit">Save</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 {% endblock %}
