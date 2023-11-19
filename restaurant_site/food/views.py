@@ -131,6 +131,13 @@ def delete_item(request, itemId):
 def items(request):
     food_objects = Item.objects.all().order_by('id')
 
+    dish_name = request.GET.get('dish_name')
+    # get the search value using input field name
+    if dish_name != '' and dish_name is not None:
+        food_objects = Item.objects.filter(item_name__icontains=dish_name).order_by('id')
+        #item_name__icontains -> checks the input value is present in any value or not
+        # It's case-insensitive
+
     # Create Paginator object using food_objects and number of item per page.
     paginator = Paginator(food_objects, 3)
     # get access to page
