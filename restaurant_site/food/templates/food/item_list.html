@@ -1,0 +1,70 @@
+{% extends 'food/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food</title>
+</head>
+<body>
+
+    {% block body %}
+    {% for item in food_objects %}
+
+    <div class="row">
+
+        <div class="col-md-4 offset-md-2">
+            <!-- <img class="card" height="150px" src="{{ item.item_image }}"  alt=""> -->
+            <img class="card" style="height: 185px;" src="{{ item.item_image }}" alt="">
+
+        </div>
+        <div class="col-md-4">
+            <h3>{{ item.item_name }}</h3>
+            <h5>{{ item.item_desc }}</h5>
+            <h6> ${{ item.item_price }} </h6>
+            <h6> {{ item.user_name }}</h6>
+
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'food:details' item.id %}" class="btn btn-success">Details</a>
+
+        </div>
+        
+    </div>
+
+    {% endfor %}
+
+    {% if food_objects.has_previous %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="?page={{ food_objects.previous_page_number }}">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            </ul>
+        </nav>
+    {% endif %}
+
+    {% if food_objects.has_next %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="?page={{ food_objects.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ food_objects.paginator.num_pages }}">Last</a></li>
+            </ul>
+        </nav>
+    {% endif %}
+
+    <!-- With normal approach -->
+    <!-- {% if food_objects.has_previous %}
+        <a href="?page={{ food_objects.previous_page_number }}">Previous</a>
+        <a href="?page=1">First</a>
+    {% endif %} -->
+    
+    <!-- {% if food_objects.has_next %}
+        <a href="?page={{ food_objects.next_page_number }}">Next</a>
+        <a href="?page={{ food_objects.paginator.num_pages }}">Last</a>
+    {% endif %} -->
+    Page: {{ food_objects.number }} of {{ food_objects.paginator.num_pages }}
+
+    {% endblock %}
+
+</body>
+</html>

@@ -7,8 +7,7 @@ urlpatterns = [
     #food/
     #used as_view() due to ItemListClassView is a class based view
     path('', views.ItemListClassView.as_view(), name = 'greet'),
-    #food/item/
-    path('item/', views.item, name = 'item'),
+
     #food/offer_water/
     path('offer_water/', views.offer_water, name = 'offer_water'),
     
@@ -23,4 +22,7 @@ urlpatterns = [
     path('update/<int:itemId>', views.update_item, name = 'update_item'),
     # delete item
     path('delete/<int:itemId>', views.delete_item, name = 'delete_item'),
+
+    # list of food with pagination
+    path('items/', views.items, name = 'items'),
 ]

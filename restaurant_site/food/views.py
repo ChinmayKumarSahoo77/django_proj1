@@ -1,12 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import loader
-
-from .models import Item
-from .forms import CreateForm
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
+from django.core.paginator import Paginator
+
+from .models import Item
+from .forms import CreateForm
 
 # Create your views here.
 
@@ -21,6 +22,7 @@ def greet(request):
     return HttpResponse(template.render(context,request))
 """
 
+# Using finction based view
 def greet(request):
     item_list = Item.objects.all()
     # template = loader.get_template('food/index.html')
@@ -41,8 +43,6 @@ class ItemListClassView(ListView):
     template_name = 'food/index.html'
     context_object_name = 'itemList'
 
-def item(request):
-    return HttpResponse("<h1>Here is the item list view</h1>")
 
 def offer_water(request):
     return HttpResponse("<h3>Do you need water?</h3>")
@@ -126,4 +126,22 @@ def delete_item(request, itemId):
         return redirect('food:greet')
 
     return render(request, 'food/delete_item.html', {'item': item_id})
+
+
+def items(request):
+    food_objects = Item.objects.all().order_by('id')
+
+    # Create Paginator object using food_objects and number of item per page.
+    paginator = Paginator(food_objects, 3)
+    # get access to page
+    page = request.GET.get('page')
+
+    #get the items present in that perticular page
+    food_objects = paginator.get_page(page)
+    
+    context = {
+        'food_objects': food_objects,
+    }
+    # Rendering template using django render
+    return render(request, 'food/item_list.html', context)
 
